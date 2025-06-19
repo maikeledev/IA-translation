@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "dev": "npx ts-node app.ts"
+    "dev": "npx ts-node app.ts",
+    "start": "genkit start -- npx ts-node app.ts"
   },
   "keywords": [],
   "author": "",
