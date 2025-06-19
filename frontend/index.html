@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>GenKit Translate</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <p id="language-selector-title"></p>
+      <div class="language-selector">
+        <button id="englishBtn" class="lang-btn active">English</button>
+        <button id="spanishBtn" class="lang-btn">Español</button>
+      </div>
+
+      <div class="translation-container">
+        <div class="text-box">
+          <textarea
+            id="originalText"
+            placeholder="Enter text to translate..."
+            rows="4"
+          ></textarea>
+        </div>
+        <div id="translatedText" class="text-box"></div>
+      </div>
+      <button id="clearBtn" class="clear-btn">Limpiar</button>
+
+      <div class="action-buttons">
+        <button id="translateBtn">Translate</button>
+        <button id="improveBtn">Improve</button>
+      </div>
+    </div>
+    <script src="translatorIA.js"></script>
+  </body>
+</html>
