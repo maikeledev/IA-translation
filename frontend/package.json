@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Development server for GenKit Translate frontend",
   "scripts": {
-    "start": "node",
     "dev": "lite-server"
   },
   "devDependencies": {

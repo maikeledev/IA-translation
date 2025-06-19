@@ -64,23 +64,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   originalText.addEventListener("input", updateActionButtonsState)
 
-  async function translateTextApiCall({ text, language, action }) {
-    try {
-      const response = await fetch(state.backendUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text, language, action }),
-      })
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      const data = await response.json()
-      return data.result.result
-    } catch (error) {
-      throw new Error("Could not connect to the server.")
-    }
-  }
-
   function renderImproveResult(result) {
     const intro = document.createElement("p")
     intro.id = "intro-improve"
@@ -103,19 +86,34 @@ document.addEventListener("DOMContentLoaded", () => {
     translatedText.appendChild(ul)
   }
 
+  async function translateTextApiCall({ text, language, action }) {
+    try {
+      const response = await fetch(state.backendUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, language, action }),
+      })
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      const data = await response.json()
+      return data
+    } catch (error) {
+      throw new Error("Could not connect to the server.")
+    }
+  }
+
   async function handleAction(action) {
     const text = originalText.value.trim()
     if (!text) return
     translatedText.innerHTML =
       '<span class="loading-spinner">Traduciendo...</span>'
     try {
-      const result = await translateTextApiCall({
+      const resultObject = await translateTextApiCall({
         text,
         language: state.selectedLanguage,
         action,
       })
-
-      const resultObject = JSON.parse(result)
 
       if (action === "improve" || resultObject.resultList?.length > 0) {
         renderImproveResult(resultObject)

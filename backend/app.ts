@@ -41,24 +41,23 @@ const translateHandler = (req: express.Request, res: express.Response) => {
       if (!result) {
         throw new Error("No result received from translation flow")
       }
-
-      res.json({
-        success: true,
-        result: {
-          result: result.resultText,
-        },
-      })
+      res.status(200).json(result)
     })
     .catch((error: any) => {
-      res.status(500).json({
-        error: "Internal server error",
-        details: error instanceof Error ? error.message : "Unknown error",
-      })
+      console.error("Error in /api/translate endpoint:", error)
+      res
+        .status(500)
+        .json({ error: "Failed to process request", details: error.message })
     })
 }
 
 app.post("/api/translateText", translateHandler)
 
+app.get("/", (_, res: express.Response) => {
+  res.send("Genkit Translation API is running!")
+})
+
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
+  console.log(`Server listening at http://localhost:${PORT}`)
+  console.log(`Access the API at http://localhost:${PORT}/api/translate`)
 })

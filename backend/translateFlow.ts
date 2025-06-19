@@ -48,8 +48,31 @@ export const translateText = ai.defineFlow(
       output: { schema: isImprove ? improveSchema : translateSchema },
     })
 
-    return {
-      resultText: result.text,
+    const parsedOutput = result.output
+    if (!parsedOutput) {
+      throw new Error("No result received from translation flow")
+    }
+
+    if (isImprove) {
+      if (
+        "resultList" in parsedOutput &&
+        Array.isArray(parsedOutput.resultList)
+      ) {
+        return parsedOutput // Return `{ resultList: [...] }`
+      }
+      throw new Error(
+        "Output for improve action did not match expected schema."
+      )
+    } else {
+      if (
+        "resultText" in parsedOutput &&
+        typeof parsedOutput.resultText === "string"
+      ) {
+        return parsedOutput
+      }
+      throw new Error(
+        "Output for translate action did not match expected schema."
+      )
     }
   }
 )
