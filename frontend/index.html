@@ -2,34 +2,121 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AI-powered translation tool with text improvement capabilities"
+    />
     <title>GenKit Translate</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="container">
-      <p id="language-selector-title"></p>
-      <div class="language-selector">
-        <button id="englishBtn" class="lang-btn active">English</button>
-        <button id="spanishBtn" class="lang-btn">Español</button>
-      </div>
+    <main class="container">
+      <header>
+        <h1 id="language-selector-title">Translation Tool</h1>
+        <nav
+          class="language-selector"
+          role="tablist"
+          aria-label="Language selection"
+        >
+          <button
+            id="englishBtn"
+            class="lang-btn active"
+            role="tab"
+            aria-selected="true"
+            aria-controls="translation-panel"
+          >
+            English
+          </button>
+          <button
+            id="spanishBtn"
+            class="lang-btn"
+            role="tab"
+            aria-selected="false"
+            aria-controls="translation-panel"
+          >
+            Español
+          </button>
+        </nav>
+      </header>
 
-      <div class="translation-container">
+      <section
+        class="translation-container"
+        role="tabpanel"
+        id="translation-panel"
+        aria-labelledby="language-selector-title"
+      >
         <div class="text-box">
+          <label for="originalText" class="visually-hidden"
+            >Text to translate</label
+          >
           <textarea
             id="originalText"
+            name="originalText"
             placeholder="Enter text to translate..."
             rows="4"
+            aria-describedby="translation-instructions"
           ></textarea>
+          <div id="translation-instructions" class="visually-hidden">
+            Enter the text you want to translate or improve
+          </div>
         </div>
-        <div id="translatedText" class="text-box"></div>
-      </div>
-      <button id="clearBtn" class="clear-btn">Limpiar</button>
+        <div class="text-box">
+          <label for="translatedText" class="visually-hidden"
+            >Translation result</label
+          >
+          <div
+            id="translatedText"
+            role="region"
+            aria-live="polite"
+            aria-label="Translation result"
+          ></div>
+        </div>
+        <button
+          id="clearBtn"
+          class="clear-btn"
+          type="button"
+          aria-label="Clear all text"
+        >
+          Limpiar
+        </button>
+      </section>
 
-      <div class="action-buttons">
-        <button id="translateBtn">Translate</button>
-        <button id="improveBtn">Improve</button>
-      </div>
-    </div>
+      <footer>
+        <div
+          class="action-buttons"
+          role="group"
+          aria-label="Translation actions"
+        >
+          <button
+            id="translateBtn"
+            type="button"
+            disabled
+            aria-describedby="translate-description"
+          >
+            Translate
+          </button>
+          <button
+            id="improveBtn"
+            type="button"
+            disabled
+            aria-describedby="improve-description"
+          >
+            Improve
+          </button>
+        </div>
+
+        <div class="visually-hidden">
+          <div id="translate-description">
+            Translate the entered text to the selected language
+          </div>
+          <div id="improve-description">
+            Improve the grammar and style of the entered text
+          </div>
+        </div>
+      </footer>
+    </main>
+
     <script src="translatorIA.js"></script>
   </body>
 </html>
